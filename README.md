@@ -7,4 +7,4 @@
 
 Provided the application is running the end point is accessible at
 
-`http://localhost:8080/jlp-rest-api/api/v1/product/sale?priceLabel=<label>`
+`http://localhost:8080/jlp-rest-api/api/v1/dresses/sale?priceLabel=<label>`

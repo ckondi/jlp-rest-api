@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/api/v1/product/sale", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/api/v1/dresses/sale", produces = {MediaType.APPLICATION_JSON_VALUE})
 public class ProductDetailsController {
     @Autowired
     private ProductDetailsService productDetailsService;
