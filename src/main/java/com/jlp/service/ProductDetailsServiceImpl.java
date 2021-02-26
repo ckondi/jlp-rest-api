@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.text.MessageFormat;
+import java.util.Comparator;
 import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +43,7 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
         List<Product> products = srcPrdDetails.getProducts().stream()
                 .filter(Objects::nonNull)
                 .filter(isDressOnSale(labelType))
+                .sorted(discountSorter())
                 .map(productDetails -> {
                     Currency currency = Currency.getInstance(productDetails.getPrice().getCurrency());
                     return Product.builder()
@@ -121,4 +123,20 @@ public class ProductDetailsServiceImpl implements ProductDetailsService {
             return String.format("%.2f", nowPrice);
         }
     }
+
+    private Comparator<ProductDetails> discountSorter() {
+        return Comparator.comparing(
+                ProductDetails::getPrice, (p1, p2) -> {
+                    double p1Now = Double.parseDouble(p1.getNow());
+                    double p1Was = StringUtils.isEmpty(p1.getWas()) ? 0 : Double.parseDouble(p1.getWas());
+                    Double p1Discount = p1Was - p1Now;
+
+                    double p2Now = Double.parseDouble(p2.getNow());
+                    double p2Was = StringUtils.isEmpty(p2.getWas()) ? 0 : Double.parseDouble(p2.getWas());
+                    Double p2Discount = p2Was - p2Now;
+
+                    return p2Discount.compareTo(p1Discount);
+                });
+    }
+
 }
