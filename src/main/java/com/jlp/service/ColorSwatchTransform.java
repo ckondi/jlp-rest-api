@@ -41,7 +41,7 @@ public class ColorSwatchTransform implements Function<List<ColorSwatch>, List<Co
                 .map(colorSwatch -> {
                     Integer resultRGB = basicColorMap.getOrDefault(colorSwatch.getBasicColor().toUpperCase(), Color.WHITE.getRGB());
                     return ColorSwatchResponse.builder()
-                            .color(colorSwatch.getColor())
+                            .color(colorSwatch.getBasicColor())
                             .skuId(colorSwatch.getSkuId())
                             .rgbColor(Integer.toHexString(resultRGB).toUpperCase())
                             .build();
